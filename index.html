@@ -1,0 +1,149 @@
+<html lang="en">
+    <head>
+        <!-- Change title from here -->
+        <title>HRS-Bench</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+        <link rel="stylesheet" type="text/css" href="benchmarking.css" />
+    </head>
+
+    <body data-new-gr-c-s-check-loaded="14.1100.0" data-gr-ext-installed="" cz-shortcut-listen="true">
+        <div class="container-fluid">
+            <!-- This is the navigation bar on the top -->
+            <nav class="navbar navbar-expand-sm navbar-light bg-faded">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content" aria-controls="nav-content" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Here is the first image and the link it goes to -->
+                <a class="nav-link active" href="https://cemse.kaust.edu.sa/vision-cair"><img src="./static/images/Vision_CAIR_Logo.png" width="100" /></a>
+                <div class="collapse navbar-collapse" id="nav-content">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <!-- Here is the second image and the link it goes to -->
+                            <a class="nav-link active" href="#"><img src="./static/images/cot3dref_logo.png" width="80" /></a>
+                        </li>
+                        <!-- These are the items on the right -->
+                        <li class="nav-item"><a class="nav-link active" href="models.html">Models</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="quantitaive_results.html">Quantitaive Results</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="qualitative_results.html">Qualitative Results</a></li>
+                    </ul>
+                </div>
+
+                <div class="text-right" id="summary" style="white-space: nowrap;">
+                    
+                </div>
+            </nav>
+
+            <div class="row">
+                <div class="col-sm-12" id="main">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href=""><img src="./static/images/cot3dref_logo.png" class="mx-auto d-block" style="width: 500px;" /></a>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="text-center">
+                                <a href="https://drive.google.com/drive/folders/1AlA259sXi-3ZJD7RFaL2bGDwJXLImJrx?usp=share_link" class="main-link btn btn-lg m-5 px-5">Data</a>
+                                <a href="https://arxiv.org/abs/2304.05390" class="main-link btn btn-lg m-5 px-5">Paper</a>
+                                <a href="https://github.com/eslambakr/T2I_benchmark" class="main-link btn btn-lg m-5 px-5">GitHub</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-8">
+                            <strong>Abstract</strong>
+                            <hr>
+                            3D visual grounding is the ability to localize objects in 3D scenes conditioned by utterances. 
+                            Most existing methods devote the referring head to localize the referred object directly, 
+                            causing failure in complex scenarios. In addition, it does not illustrate how and why the network reaches the 
+                            final decision. In this paper, we address this question “Can we design an interpretable 3D visual grounding 
+                            framework that has the potential to mimic the human perception system?”. To this end, we formulate the 3D 
+                            visual grounding problem as a sequence-to-sequence (Seq2Seq) task by first predicting a chain of anchors 
+                            and then the final target. Interpretability not only improves the overall performance but also helps us 
+                            identify failure cases. Following the chain of thoughts approach enables us to decompose the referring 
+                            task into interpretable intermediate steps, boosting the performance and making our framework extremely 
+                            data-efficient. Moreover, our proposed framework can be easily integrated into any existing architecture.
+
+                            <br><br>
+                            <strong>Poster</strong>
+                            <hr>
+                            <div class="text-center"><img src="./static/images/CoT3DRef_Poster_ICLR_MainConference.png" style="width: 700px;margin-bottom:50px;margin-top:10px;" /></div>
+                            
+                            <br><br>
+                            <strong>Main Idea</strong>
+                            <hr>
+                            In this paper, we mainly answer the following question: Can we design an interpretable 3D visual grounding framework that 
+                            has the potential to mimic the human perception system? To this end, we formulate the 3D visual grounding problem as a 
+                            sequence-to-sequence (Seq2seq) task. The input sequence combines 3D objects from the input scene and an input utterance 
+                            describing a specific object. On the output side, in contrast to the existing 3D visual grounding architectures, 
+                            we predict the target object and a chain of anchors in a causal manner. This chain of anchors is based on the logical 
+                            sequence of steps a human will follow to reach the target.
+                            <div class="text-center"><img src="./static/images/cot3dref_what.png" style="width: 700px;margin-bottom:50px;margin-top:10px;" /></div>
+                            
+                            <br><br>
+                            <strong>Architecture</strong>
+                            <hr>
+                            An overview of our Chain-of-Thoughts Data-Efficient 3D visual grounding framework (CoT3DRef). 
+                            First, we predict the anchors OT from the input utterance, then sort the anchors in a logical order  
+                            using the Pathway module. Then, we feed the multi-modal features, the parallel localized objects, 
+                            and the logical path to our Chain-of-Thoughts decoder to localize the referred object and the anchors in a logical order.
+                            <div class="text-center"><img src="./static/images/cot3dref_arch.png" style="width: 700px;margin-bottom:50px;margin-top:10px;" /></div>
+
+                            <br><br>
+                            <strong>Pseudo Labels</strong>
+                            <hr>
+                            During the training phase, our proposed framework requires more information than the standard available GT 
+                            in existing datasets. These datasets only annotate the referred object and the target. However, our framework
+                            requires anchor annotations. Three types of extra annotations are needed: 1) Given an input utterance, 
+                            we need to identify the mentioned objects other than the target; the anchors. 2) Once we extract the anchors
+                            from the utterance, we need to know their logical order to create a chain of thoughts. 3) Finally, we need 
+                            the localization information for each anchor, i.e., to assign a bounding box to every anchor.
+                            To make our framework self-contained and scalable, we do not require any manual effort. Instead, 
+                            we collect pseudo-labels automatically without any human intervention.
+                            <div class="text-center"><img src="./static/images/cot3dref_algo.png" style="width: 700px;margin-bottom:50px;margin-top:10px;" /></div>
+
+                            <br><br>
+                            <strong>Data Efficient</strong>
+                            <hr>
+                            We assess our model on a challenging setup, where we assume access to only limited data. Four percentage of data is tested, 
+                            i.e., 10%, 40%, 70%, and 100%. As shown in Figure 2, on the Sr3D dataset, using only 10% of the data, we match the same 
+                            performance of MVT and SAT that are trained on 100% of the data. This result highlights the data efficiency of our method. 
+                            Furthermore, when trained on 10% of the data on Nr3D with noisy pseudo labels, we still surpass all the baselines 
+                            with considerable margins.
+                            <div class="text-center"><img src="./static/images/cot3dref_dataeff.png" style="width: 700px;margin-bottom:50px;margin-top:10px;" /></div>
+
+                            <br><br>
+                            <strong>Quantitative Results</strong>
+                            <hr>
+                            By effectively localizing a chain of anchors before the final target, we achieve state-of-the-art results without requiring 
+                            any additional manual annotations.
+                            <div class="text-center"><img src="./static/images/cot3dref_quantative.png" style="width: 700px;margin-bottom:50px;margin-top:10px;" /></div>
+                            
+                            <br><br>
+                            <strong>Qualitative Results</strong>
+                            <hr>
+                            As shown in the below figure , the first three examples show that our model successfully localizes the referred objects by 
+                            leveraging the mentioned anchors, such as “the table with 5 chairs around”. However, in the ambiguous description shown in 
+                            the fourth example: “2nd stool from the left”, the model incorrectly predicts the stool, as it is view-dependent. 
+                            In other words, if you look at the stools from the other side, our predicted box will be correct. Additionally, 
+                            the last example shows a challenging scenario where a negation in the description is not properly captured by our model.
+                            <div class="text-center"><img src="./static/images/cot3dref_qualitative.png" style="width: 700px;margin-bottom:50px;margin-top:10px;" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <a href="https://clustrmaps.com/site/1bu5k"  title="Visit tracker"><img src="//www.clustrmaps.com/map_v2.png?d=jg_qV7syyBZQSQrhriBmwB7c00HON-PPGJhxVnb7U9A&cl=ffffff" /></a>
+        </div>
+        
+        
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.29.0/js/jquery.tablesorter.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.0.3/showdown.min.js"></script>
+    </body>
+    <grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+</html>
